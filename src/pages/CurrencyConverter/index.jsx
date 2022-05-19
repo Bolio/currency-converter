@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -6,11 +7,18 @@ import Grid from "@mui/material/Grid";
 import MainTitle from "../../components/title/MainTitle";
 import Input from "../../components/Input";
 import { choiceCurrency } from "./utils";
+import { fetchInformationCurrenciesThunk } from "../../redux/modules/currencyConverter";
 
 function CurrencyConverter() {
+  const dispatch = useDispatch();
   const [choice, setChoice] = useState(undefined);
   const [valueMxn, setValueMxn] = useState("");
   const [valueUsd, setValueUsd] = useState("");
+
+  useEffect(() => {
+    console.log("useEffect");
+    dispatch(fetchInformationCurrenciesThunk());
+  }, []);
 
   const handleChangeInput = (value, currency) => {
     // console.log("currency:", currency);
