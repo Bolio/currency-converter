@@ -12,7 +12,7 @@
   "jest": {
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
-      "<rootDir>/src/__tests__/setupTest.js"
+      "<rootDir>/src/jest/setupTest.js"
     ]
   },
   "dependencies": {
