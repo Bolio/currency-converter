@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainTitle component Should render MainTitle component 1`] = `
+<div>
+  <h3
+    class="MuiTypography-root MuiTypography-h3 MuiTypography-alignCenter MuiTypography-gutterBottom css-1le49ku-MuiTypography-root"
+  >
+    Hola Test
+  </h3>
+</div>
+`;

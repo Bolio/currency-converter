@@ -12,10 +12,10 @@ describe("MainTitle component", () => {
     />
   );
 
-  // test("Should render MainTitle component", () => {
-  //   const { container } = render(component);
-  //   expect(container).toMatchSnapshot();
-  // });
+  test("Should render MainTitle component", () => {
+    const { container } = render(component);
+    expect(container).toMatchSnapshot();
+  });
 
   test("Should find a title", () => {
     const { getByText } = render(component);
