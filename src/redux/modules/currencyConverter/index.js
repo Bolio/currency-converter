@@ -30,10 +30,18 @@ export const fetchCurrenciesInformation = (payload) => {
 
 // Epics
 export const fetchInformationCurrenciesThunk = () => async (dispatch) => {
+  const myHeaders = new Headers();
+  myHeaders.append("apikey", "nUban3UMWWnLBpyYuXzc6AmOGVnTULuI");
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: myHeaders,
+  };
   try {
     console.log("FROM API");
-    const urlAPI = ``;
-    const responseAPI = await fetch(urlAPI);
+    const urlAPI =
+      "https://api.apilayer.com/exchangerates_data/convert?to=MXN&from=USD&amount=1";
+    const responseAPI = await fetch(urlAPI, requestOptions);
     const resultAPI = await responseAPI.json();
     dispatch(fetchCurrenciesInformation(resultAPI));
   } catch (error) {
