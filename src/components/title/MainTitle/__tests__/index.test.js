@@ -5,9 +5,9 @@ import { render } from "@testing-library/react";
 describe("MainTitle component", () => {
   const component = (
     <MainTitle
-      text={"Hola Test"}
-      align={"center"}
-      variant={"h3"}
+      text="Hola Test"
+      align="center"
+      variant="h3"
       gutterBottom={true}
     />
   );
