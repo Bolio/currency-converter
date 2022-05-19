@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
 
 import MainTitle from "../../components/title/MainTitle";
 import Input from "../../components/Input";
@@ -20,9 +21,7 @@ function CurrencyConverter() {
     dispatch(fetchInformationCurrenciesThunk(choice));
   }, [choice]);
 
-  const dataCurrencyExchangeAPI = useSelector(
-    (state) => state.currency.currentConversion
-  );
+  const dataCurrencyExchangeAPI = useSelector((state) => state.currency);
   console.log("dataCurrencyExchangeAPI", dataCurrencyExchangeAPI);
 
   const handleChangeInput = (value, currency) => {
@@ -31,10 +30,10 @@ function CurrencyConverter() {
 
     if (currency === "USD") {
       setValueUsd(value);
-      setValueMxn(value * dataCurrencyExchangeAPI?.result);
+      setValueMxn(value * dataCurrencyExchangeAPI?.currentConversion?.result);
     } else if (currency === "MXN") {
       setValueMxn(value);
-      setValueUsd(value * dataCurrencyExchangeAPI?.result);
+      setValueUsd(value * dataCurrencyExchangeAPI?.currentConversion?.result);
     }
   };
 
@@ -77,6 +76,13 @@ function CurrencyConverter() {
               value={valueMxn}
             />
           </Grid>
+          {dataCurrencyExchangeAPI?.error && (
+            <Grid item xs={12}>
+              <Alert severity="error">
+                {dataCurrencyExchangeAPI.errorMessage}
+              </Alert>
+            </Grid>
+          )}
         </Grid>
       </Paper>
     </Container>

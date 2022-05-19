@@ -9,12 +9,19 @@ const initialState = {
 // Actions
 const FETCH_INFORMATION_CURRENCY =
   "modules/currencyConverter/FETCH_INFORMATION_CURRENCY";
+const ERROR_CURRENCY = "modules/currencyConverter/ERROR_CURRENCY";
 
 // Reducers
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FETCH_INFORMATION_CURRENCY:
       return { ...state, currentConversion: action.payload };
+    case ERROR_CURRENCY:
+      return {
+        ...state,
+        error: true,
+        errorMessage: "Ups! Error en la API, inténtelo más tarde",
+      };
     default:
       return state;
   }
@@ -24,6 +31,13 @@ export default function reducer(state = initialState, action = {}) {
 export const fetchCurrenciesInformation = (payload) => {
   return {
     type: FETCH_INFORMATION_CURRENCY,
+    payload,
+  };
+};
+
+export const errorCurrenciesInformation = (payload) => {
+  return {
+    type: ERROR_CURRENCY,
     payload,
   };
 };
@@ -46,6 +60,7 @@ export const fetchInformationCurrenciesThunk = (choice) => async (dispatch) => {
     const resultAPI = await responseAPI.json();
     dispatch(fetchCurrenciesInformation(resultAPI));
   } catch (error) {
+    dispatch(errorCurrenciesInformation(error));
     console.log(error);
   }
 };
