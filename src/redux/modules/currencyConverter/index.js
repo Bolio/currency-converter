@@ -1,5 +1,5 @@
 const initialState = {
-  currencyConverter: {},
+  currentConversion: {},
   fetching: false,
   success: false,
   error: false,
@@ -14,7 +14,7 @@ const FETCH_INFORMATION_CURRENCY =
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FETCH_INFORMATION_CURRENCY:
-      return { ...state, currencyConverter: action.payload };
+      return { ...state, currentConversion: action.payload };
     default:
       return state;
   }
@@ -29,7 +29,8 @@ export const fetchCurrenciesInformation = (payload) => {
 };
 
 // Epics
-export const fetchInformationCurrenciesThunk = () => async (dispatch) => {
+export const fetchInformationCurrenciesThunk = (choice) => async (dispatch) => {
+  console.log("choice", choice);
   const myHeaders = new Headers();
   myHeaders.append("apikey", "nUban3UMWWnLBpyYuXzc6AmOGVnTULuI");
   const requestOptions = {
@@ -37,10 +38,10 @@ export const fetchInformationCurrenciesThunk = () => async (dispatch) => {
     redirect: "follow",
     headers: myHeaders,
   };
+  const convertTO = choice === "USD" ? "MXN" : "USD";
   try {
     console.log("FROM API");
-    const urlAPI =
-      "https://api.apilayer.com/exchangerates_data/convert?to=MXN&from=USD&amount=1";
+    const urlAPI = `https://api.apilayer.com/exchangerates_data/convert?to=${convertTO}&from=${choice}&amount=1`;
     const responseAPI = await fetch(urlAPI, requestOptions);
     const resultAPI = await responseAPI.json();
     dispatch(fetchCurrenciesInformation(resultAPI));

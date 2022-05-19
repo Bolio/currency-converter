@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -17,8 +17,13 @@ function CurrencyConverter() {
 
   useEffect(() => {
     console.log("useEffect");
-    dispatch(fetchInformationCurrenciesThunk());
-  }, []);
+    dispatch(fetchInformationCurrenciesThunk(choice));
+  }, [choice]);
+
+  const dataCurrencyExchangeAPI = useSelector(
+    (state) => state.currency.currentConversion
+  );
+  console.log("dataCurrencyExchangeAPI", dataCurrencyExchangeAPI);
 
   const handleChangeInput = (value, currency) => {
     // console.log("currency:", currency);
@@ -26,10 +31,10 @@ function CurrencyConverter() {
 
     if (currency === "USD") {
       setValueUsd(value);
-      setValueMxn(value * 2);
+      setValueMxn(value * dataCurrencyExchangeAPI?.result);
     } else if (currency === "MXN") {
       setValueMxn(value);
-      setValueUsd(value * 4);
+      setValueUsd(value * dataCurrencyExchangeAPI?.result);
     }
   };
 
