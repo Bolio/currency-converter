@@ -1,7 +1,7 @@
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
-// import currencyConverter from "./modules/currencyConverter/index";
+import currencyConverter from "./modules/currencyConverter/index";
 
 const devTools =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
