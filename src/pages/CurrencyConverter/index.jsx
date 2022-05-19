@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
 
 import MainTitle from "../../components/title/MainTitle";
+import Input from "../../components/Input";
+import { choiceCurrency } from "./utils";
 
 function CurrencyConverter() {
+  const [choice, setChoice] = useState(undefined);
+  const [valueMxn, setValueMxn] = useState("");
+  const [valueUsd, setValueUsd] = useState("");
+
+  const handleChangeInput = (value, currency) => {
+    // console.log("currency:", currency);
+    // console.log("value:", value);
+
+    if (currency === "USD") {
+      setValueUsd(value);
+      setValueMxn(value * 2);
+    } else if (currency === "MXN") {
+      setValueMxn(value);
+      setValueUsd(value * 4);
+    }
+  };
+
+  const handleFocus = (choice) => {
+    setChoice(choice);
+    setValueMxn("");
+    setValueUsd("");
+  };
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
@@ -15,7 +40,31 @@ function CurrencyConverter() {
           variant={"h3"}
           gutterBottom={true}
         />
-        <Divider />
+        <Grid container>
+          <Grid item xs={5}>
+            <Input
+              id="currency-usd"
+              label="USD"
+              type="number"
+              focus={(e) => handleFocus("USD")}
+              change={(e) => handleChangeInput(e.target.value, "USD")}
+              value={valueUsd}
+            />
+          </Grid>
+          <Grid item xs={2} sx={{ textAlign: "center" }}>
+            {choiceCurrency(choice)}
+          </Grid>
+          <Grid item xs={5}>
+            <Input
+              id="curency-mxn"
+              label="MXN"
+              type="number"
+              focus={(e) => handleFocus("MXN")}
+              change={(e) => handleChangeInput(e.target.value, "MXN")}
+              value={valueMxn}
+            />
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   );
